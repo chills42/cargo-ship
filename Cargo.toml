@@ -2,6 +2,10 @@
 name = "cargo-ship"
 version = "0.1.0"
 authors = ["Craig Hills <chills@gmail.com>"]
+description = "A cargo command to ship a tested release build"
+repository = "https://github.com/chills42/cargo-ship"
+readme = "README.md"
+license = "MIT"
 
 [dependencies]
 toml = "*"
