@@ -2,32 +2,40 @@ extern crate toml;
 
 #[cfg(not(test))]
 fn main() {
-    use std::env;
-    let value = read_cargo_config();
-    let home_dir_bin = env::home_dir().expect("unable to determine publish directory").to_str().unwrap().to_string() + "/.bin/";
-
-    let release_name = value.lookup("release.name");
-    let default_name = value.lookup("package.name");
-    let target_name = "./target/release/".to_owned() + release_name.or(default_name).expect("unable to determine target name").as_str().unwrap();
+    let home_dir_bin = get_ship_dir();
+    let target_name = build_target_name();
 
     let args = vec!["test".to_owned()];
-    let exit_status = run_command("cargo".to_owned(), args);
-    if !exit_status.success() {
+    let test_exit_status = run_command("cargo".to_owned(), args);
+    if !test_exit_status.success() {
         println!("Stopping ship due to tests.");
-        exit_with_code(exit_status.code());
+        exit_with_code(test_exit_status.code());
     }
 
-    let args = vec!["build".to_owned(), "--release".to_owned()];
-    let exit_status = run_command("cargo".to_owned(), args);
-
-    if !exit_status.success() {
+    let build_args = vec!["build".to_owned(), "--release".to_owned()];
+    let build_exit_status = run_command("cargo".to_owned(), build_args);
+    if !build_exit_status.success() {
         println!("Stopping ship due to compilation error.");
-        exit_with_code(exit_status.code());
+        exit_with_code(build_exit_status.code());
     }
 
-    let args = vec![target_name, home_dir_bin];
-    println!("copying {} to {}", args[0], args[1]);
-    run_command("cp".to_owned(), args);
+    let cp_args = vec![target_name, home_dir_bin];
+    println!("copying {} to {}", cp_args[0], cp_args[1]);
+    run_command("cp".to_owned(), cp_args);
+}
+
+#[cfg(not(test))]
+fn build_target_name() -> String {
+    let value = read_cargo_config();
+    let release_name = value.lookup("release.name");
+    let default_name = value.lookup("package.name");
+    "./target/release/".to_owned() + release_name.or(default_name).expect("unable to determine target name").as_str().unwrap()
+}
+
+#[cfg(not(test))]
+fn get_ship_dir() -> String {
+    use std::env;
+    env::home_dir().expect("unable to determine publish directory").to_str().unwrap().to_owned() + "/.bin/"
 }
 
 #[cfg(not(test))]
