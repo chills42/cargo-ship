@@ -27,9 +27,10 @@ fn main() {
 #[cfg(not(test))]
 fn build_target_name() -> String {
     let value = read_cargo_config();
+    let binary_name  = value.lookup("bin.0.name");
     let release_name = value.lookup("release.name");
     let default_name = value.lookup("package.name");
-    "./target/release/".to_owned() + release_name.or(default_name).expect("unable to determine target name").as_str().unwrap()
+    "./target/release/".to_owned() + binary_name.or(release_name).or(default_name).expect("unable to determine target name").as_str().unwrap()
 }
 
 #[cfg(not(test))]
