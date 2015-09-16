@@ -1,4 +1,5 @@
 # cargo-ship
+[![Build Status](https://travis-ci.org/chills42/cargo-ship.svg)](https://travis-ci.org/chills42/cargo-ship)
 
 This cargo plugin provides the `ship` command, which at this point simply
 runs `cargo test`, `cargo build --release`, and then copies the target
