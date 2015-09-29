@@ -8,6 +8,16 @@ executable to the `~/.bin/` folder.
 The cargo-ship tool is a cargo plugin that provides a simple way to ship
 a tested release build of a project.
 
+For example, when I want to get the latest copy of the [xsv](https://github.com/BurntSushi/xsv) csv toolkit I can do the following:
+
+    git clone https://github.com/BurntSushi/xsv.git
+    cd xsv
+    cargo ship
+
+After the tool passes tests and compiles in release mode, it is ready to use!
+
+    echo 'these,are,my,headers\n1,2,3,4\n5,6,7,8' | xsv table
+
 ## Defaults
 
 Running this as a plugin using `cargo ship` is basically the same as doing the following:
@@ -22,8 +32,8 @@ with <target_name> being the name specified in the project's Cargo.toml file as 
 
 ## Assumptions
 
-The user is expected to have a recognizable home directory.
-The user should have a `~/.bin` folder that has been added to their PATH environment variable.
+- The user is expected to have a recognizable home directory.
+- The user should have a `~/.bin` folder that has been added to their PATH environment variable.
 
 ## Future plans
 
