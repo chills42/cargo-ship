@@ -27,16 +27,22 @@ fn main() {
 #[cfg(not(test))]
 fn build_target_name() -> String {
     let value = read_cargo_config();
-    let binary_name  = value.lookup("bin.0.name");
+    let binary_name = value.lookup("bin.0.name");
     let release_name = value.lookup("release.name");
     let default_name = value.lookup("package.name");
-    "./target/release/".to_owned() + binary_name.or(release_name).or(default_name).expect("unable to determine target name").as_str().unwrap()
+    "./target/release/".to_owned() +
+    binary_name.or(release_name)
+               .or(default_name)
+               .expect("unable to determine target name")
+               .as_str()
+               .unwrap()
 }
 
 #[cfg(not(test))]
 fn get_ship_dir() -> String {
     use std::env;
-    env::home_dir().expect("unable to determine publish directory").to_str().unwrap().to_owned() + "/.bin/"
+    env::home_dir().expect("unable to determine publish directory").to_str().unwrap().to_owned() +
+    "/.bin/"
 }
 
 #[cfg(not(test))]
@@ -54,13 +60,13 @@ fn read_cargo_config() -> toml::Value {
 
 #[cfg(not(test))]
 fn exit_with_code(code: Option<i32>) {
-    use std::process::{self};
+    use std::process;
     process::exit(code.unwrap_or(0));
 }
 
 #[cfg(not(test))]
 fn run_command(command: String, args: Vec<String>) -> std::process::ExitStatus {
-    use std::process::{Command};
+    use std::process::Command;
 
     let mut command = Command::new(command);
     command.args(&args);
