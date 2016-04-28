@@ -30,10 +30,9 @@ Running this as a plugin using `cargo ship` is basically the same as doing the f
 ```bash
 cargo test
 cargo build --release
+# <target_name> to be replaced by name of project in Cargo.toml
 cp ./target/release/<target_name> ~/.bin
 ```
-
-with <target_name> being the name specified in the project's Cargo.toml file as the release name
 
 ## Assumptions
 
