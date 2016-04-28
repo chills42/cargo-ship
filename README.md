@@ -11,19 +11,23 @@ a tested release build of a project.
 
 For example, when I want to get the latest copy of the [xsv](https://github.com/BurntSushi/xsv) csv toolkit I can do the following:
 
-    git clone https://github.com/BurntSushi/xsv.git
-    cd xsv
-    cargo ship
+```bash
+git clone https://github.com/BurntSushi/xsv.git
+cd xsv
+cargo ship
+```
 
 After the tool passes tests and compiles in release mode, it is ready to use!
 
-    echo -e 'these,are,my,headers\n1,2,3,4\n5,6,7,8' | xsv table
+```bash
+echo -e 'these,are,my,headers\n1,2,3,4\n5,6,7,8' | xsv table
+```
 
 ## Defaults
 
 Running this as a plugin using `cargo ship` is basically the same as doing the following:
 
-```text
+```bash
 cargo test
 cargo build --release
 cp ./target/release/<target_name> ~/.bin
