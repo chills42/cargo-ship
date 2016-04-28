@@ -17,7 +17,7 @@ For example, when I want to get the latest copy of the [xsv](https://github.com/
 
 After the tool passes tests and compiles in release mode, it is ready to use!
 
-    echo 'these,are,my,headers\n1,2,3,4\n5,6,7,8' | xsv table
+    echo -e 'these,are,my,headers\n1,2,3,4\n5,6,7,8' | xsv table
 
 ## Defaults
 
